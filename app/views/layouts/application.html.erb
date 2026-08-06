@@ -23,7 +23,20 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <%= yield %>
+<body>
+  <% if current_bibliotecario && !current_bibliotecario.senha_provisoria %>
+    <header class="header">
+      <div class="logo">
+        <%= image_tag "logo.png", width: 24, alt: "Logo" %>
+      </div>
+      <nav class="menu-area">
+        <%= button_to "SAIR", logout_path, method: :delete, class: "btn-menu" %>
+      </nav>
+    </header>
+  <% end %>
+
+    <main class="content">
+      <%= yield %>
+    </main>
   </body>
 </html>

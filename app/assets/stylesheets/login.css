@@ -1,0 +1,100 @@
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f4f8;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: -8px;
+}
+
+.login-container {
+    background-color: #002b5e;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); 
+    padding: 50px 40px;
+    width: 320px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.login-container h1 {
+    color: white;
+    font-size: 36px;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 35px;
+}
+
+.input-group {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    display: flex; 
+    align-items: center;
+    padding: 0 0 0 15px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.input-group img {
+    width: 20px;
+    height: 20px;
+    opacity: 0.7; 
+}
+
+.input-group input {
+    background-color: transparent;
+    color: white;
+    font-size: 14px;
+    padding: 12px 10px;
+    border: none;
+    outline: none;
+    width: 100%;
+}
+
+.input-group input::placeholder {
+    color: #b0c4de;
+    font-style: italic;
+}
+
+.login-button {
+    background-color: #28a745;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 10px 50px;
+    cursor: pointer;
+    border: none;
+    margin-top: 15px;
+    width: 100%;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.login-button:hover {
+    background-color: #218838;
+}
+
+.error-message {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.forgot-password-link {
+    display: inline-block;
+    margin-top: 25px;
+    color: #b0c4de;
+    font-size: 13px;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.forgot-password-link:hover {
+    color: white;
+    text-decoration: underline;
+}
