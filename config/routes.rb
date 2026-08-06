@@ -14,4 +14,7 @@ Rails.application.routes.draw do
   
   # categorias 
   resources :categorias, only: [:index, :new, :create]
+
+  # livros
+  resources :livros, only: [:index, :new, :create]
 end

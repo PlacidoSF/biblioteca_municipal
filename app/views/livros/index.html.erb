@@ -1,0 +1,23 @@
+<div class="content">
+  <div class="action-bar">
+    <%= link_to "+ Novo Livro", new_livro_path, class: "btn-novo" %>
+  </div>
+
+  <div class="table-header">
+    <div style="flex: 2;">Título</div>
+    <div style="flex: 2;">Autor</div>
+    <div style="flex: 1;">Categoria</div>
+    <div style="flex: 1;">Status</div>
+  </div>
+
+  <% @livros.each do |livro| %>
+    <div class="row">
+      <div style="flex: 2;"><%= livro.titulo %></div>
+      <div style="flex: 2;"><%= livro.autor %></div>
+
+      <div style="flex: 1;"><%= livro.categoria.nome %></div>
+    
+      <div style="flex: 1;"><%= livro.status.capitalize %></div>
+    </div>
+  <% end %>
+</div>
