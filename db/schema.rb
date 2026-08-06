@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_06_182755) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_06_191409) do
   create_table "bibliotecarios", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email"
@@ -37,6 +37,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_06_182755) do
     t.string "titulo", null: false
     t.datetime "updated_at", null: false
     t.index ["categoria_id"], name: "index_livros_on_categoria_id"
+  end
+
+  create_table "usuarios", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "cpf", null: false
+    t.datetime "created_at", null: false
+    t.string "email", null: false
+    t.string "nome", null: false
+    t.string "senha_emprestimo", null: false
+    t.string "telefone", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cpf"], name: "index_usuarios_on_cpf", unique: true
   end
 
   add_foreign_key "livros", "categorias"

@@ -1,0 +1,23 @@
+<div class="content">
+  <div class="action-bar">
+    <%= link_to "+ Novo Usuário", new_usuario_path, class: "btn-novo" %>
+  </div>
+
+  <div class="table-header">
+    <div style="flex: 2;">Nome</div>
+    <div style="flex: 2;">E-mail</div>
+    <div style="flex: 1;">CPF</div>
+    <div style="flex: 1;">Telefone</div>
+    <div style="flex: 1;">Senha (PIN)</div>
+  </div>
+
+  <% @usuarios.each do |usuario| %>
+    <div class="row">
+      <div style="flex: 2;"><%= usuario.nome %></div>
+      <div style="flex: 2;"><%= usuario.email %></div>
+      <div style="flex: 1;"><%= usuario.cpf %></div>
+      <div style="flex: 1;"><%= usuario.telefone %></div>
+      <div style="flex: 1;"><strong><%= usuario.senha_emprestimo %></strong></div>
+    </div>
+  <% end %>
+</div>

@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
       if bibliotecario.senha_provisoria
         redirect_to redefinir_senha_path
       else
-        redirect_to livros_path, notice: "Login realizado com sucesso! Bem-vindo(a), #{bibliotecario.nome}."
+        redirect_to  usuarios_path, notice: "Login realizado com sucesso! Bem-vindo(a), #{bibliotecario.nome}."
       end
 
     else 
