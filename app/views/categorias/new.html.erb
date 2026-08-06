@@ -1,0 +1,28 @@
+<div class="content">
+  <div class="action-bar" style="justify-content: flex-start;">
+    <%= link_to "VOLTAR", categorias_path, class: "btn-menu", style: "color: #000; background: #e9e5e5; border-radius: 5px;" %>
+  </div>
+
+  <div class="form-container">
+    <h1 class="page-title">Nova Categoria</h1>
+    <p class="page-subtitle">Preencha os dados para cadastrar uma nova categoria no sistema.</p>
+    
+    <% if @categoria.errors.any? %>
+      <div class="error-message">
+        <ul style="list-style-type: none; padding: 0; margin: 0;">
+          <% @categoria.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form_with model: @categoria, local: true do |form| %>
+      <div class="input-grid">
+        <%= form.text_field :nome, placeholder: "Nome da Categoria (Ex: Ficção)", required: true, class: "input-field" %>
+      </div>
+
+      <%= form.submit "CADASTRAR", class: "btn-confirmar" %>
+    <% end %>
+  </div>
+</div>

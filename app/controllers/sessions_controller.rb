@@ -16,11 +16,11 @@ class SessionsController < ApplicationController
       if bibliotecario.senha_provisoria
         redirect_to redefinir_senha_path
       else
-        redirect_to bibliotecarios_path, notice: "Login realizado com sucesso! Bem-vindo(a), #{bibliotecario.nome}."
+        redirect_to categorias_path, notice: "Login realizado com sucesso! Bem-vindo(a), #{bibliotecario.nome}."
       end
 
     else 
-      flash.now[:erro] = 'Email ou senha inválidos.'
+      flash.now[:erro] = 'Email ou senha inválidos'
       render :new, status: :unprocessable_entity
     end
 

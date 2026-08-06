@@ -10,5 +10,8 @@ Rails.application.routes.draw do
   patch 'redefinir_senha', to: 'senhas#update'
 
   # bibliotecarios
-  resources :bibliotecarios, only: [:index, :new, :create] 
+  resources :bibliotecarios, only: [:index, :new, :create]
+  
+  # categorias 
+  resources :categorias, only: [:index, :new, :create]
 end

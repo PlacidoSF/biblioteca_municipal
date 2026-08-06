@@ -1,0 +1,15 @@
+<div class="content">
+  <div class="action-bar">
+    <%= link_to "+ Nova Categoria", new_categoria_path, class: "btn-novo" %>
+  </div>
+
+  <div class="table-header">
+    <div class="col-nome" style="flex: 1;">Nome da Categoria</div>
+  </div>
+
+  <% @categorias.each do |categoria| %>
+    <div class="row">
+      <div class="col-nome" style="flex: 1;"><%= categoria.nome %></div>
+    </div>
+  <% end %>
+</div>
