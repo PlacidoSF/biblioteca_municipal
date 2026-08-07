@@ -11,31 +11,27 @@
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "formulario", "global", "header", "login", "tabelas", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-<body>
-  <% if current_bibliotecario && !current_bibliotecario.senha_provisoria %>
-    <header class="header">
-      <div class="logo">
-        <%= image_tag "logo.png", width: 24, alt: "Logo" %>
-      </div>
-      <nav class="menu-area">
-        <%= button_to "SAIR", logout_path, method: :delete, class: "btn-menu" %>
-      </nav>
-    </header>
-  <% end %>
+  <body>
+    <% if current_bibliotecario && !current_bibliotecario.senha_provisoria %>
+      <header class="header">
+        <div class="logo">
+          <%= image_tag "logo.png", width: 24, alt: "Logo" %>
+        </div>
+        <nav class="menu-area">
+          <%= button_to "SAIR", destroy_bibliotecario_session_path, method: :delete, class: "btn-menu", data: { turbo: false } %>
+        </nav>
+      </header>
+    <% end %>
 
-    <main class="content">
+    <main class="<%= devise_controller? ? '' : 'content' %>">
       <%= yield %>
     </main>
   </body>

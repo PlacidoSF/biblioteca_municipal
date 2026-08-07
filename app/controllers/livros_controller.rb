@@ -1,6 +1,5 @@
 class LivrosController < ApplicationController
-  before_action :require_login
-
+  
   def index
     @livros = Livro.includes(:categoria).all
   end

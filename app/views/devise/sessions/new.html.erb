@@ -1,10 +1,10 @@
+<% flash.delete(:notice) %>
 <div class="login-wrapper">
   <div class="login-container">
     
-    <!-- mensagem de erro -->
-    <% if flash.now[:erro] %>
+    <% if alert || notice %>
       <div class="error-message" id="mensagem-erro">
-        <%= flash.now[:erro] %>
+        <%= alert || notice %>
       </div>
 
       <script>
@@ -24,21 +24,21 @@
 
     <h1>Log in</h1>
     
-    <%= form_with url: login_path do |form| %>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false }) do |form| %>
       <div class="input-group">
         <%= image_tag "user.png", alt: "Ícone Usuário" %>
-        <%= form.text_field :email, placeholder: "Usuário", required: true %>
+        <%= form.email_field :email, placeholder: "Usuário", autofocus: true, required: true %>
       </div>
       
       <div class="input-group">
         <%= image_tag "locked.png", alt: "Ícone Cadeado" %>
-        <%= form.password_field :senha, placeholder: "Senha", required: true %>
+        <%= form.password_field :password, placeholder: "Senha", required: true %>
       </div>
       
       <%= form.submit "Log in", class: "login-button" %>
     <% end %>
 
-   <%= link_to "Esqueceu sua senha?", new_recuperacao_senha_path, class: "forgot-password-link" %>
+   <%= link_to "Esqueceu sua senha?", new_password_path(resource_name), class: "forgot-password-link" %>
 
   </div>
 </div>

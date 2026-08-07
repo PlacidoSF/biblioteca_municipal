@@ -1,5 +1,4 @@
 class UsuariosController < ApplicationController
-  before_action :require_login
 
   def index 
     @usuarios = Usuario.all

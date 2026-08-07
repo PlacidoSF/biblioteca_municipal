@@ -1,0 +1,50 @@
+<div class="login-wrapper">
+  <div class="login-container">
+    
+    <% if resource.errors.any? || alert || flash.now[:erro] %>
+      <div class="error-message" id="mensagem-erro">
+        <% if resource.errors.any? %>
+          <ul style="list-style-type: none; padding: 0; margin: 0;">
+            <% resource.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        <% else %>
+          <%= alert || flash.now[:erro] %>
+        <% end %>
+      </div>
+
+      <script>
+        setTimeout(function() {
+          const mensagem = document.getElementById('mensagem-erro');
+          if (mensagem) {
+            mensagem.style.transition = 'opacity 0.5s ease';
+            mensagem.style.opacity = '0';
+            setTimeout(function() { mensagem.remove(); }, 500); 
+          }
+        }, 2000);
+      </script>
+    <% end %>
+
+    <h1>Recuperar Senha</h1>
+    <p style="text-align: center; margin-bottom: 20px; color: #666; font-size: 14px;">
+      Digite seu e-mail para receber as instruções de redefinição.
+    </p>
+    
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }, data: { turbo: false }) do |form| %>
+      
+      <div class="input-group">
+        
+        <%= image_tag "locked.png", alt: "Ícone" %>
+        <%= form.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Seu E-mail", required: true %>
+      </div>
+      
+      <%= form.submit "Enviar instruções", class: "login-button" %>
+    <% end %>
+
+    <div style="text-align: center; margin-top: 20px;">
+      <%= link_to "Voltar ao Login", new_session_path(resource_name), style: "color: #4a90e2; text-decoration: none; font-size: 14px; font-weight: bold;" %>
+    </div>
+
+  </div>
+</div>

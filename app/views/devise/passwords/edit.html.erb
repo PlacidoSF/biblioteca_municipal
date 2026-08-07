@@ -1,0 +1,41 @@
+<div class="login-wrapper">
+  <div class="login-container">
+    
+    <% if resource.errors.any? || alert || flash.now[:erro] %>
+      <div class="error-message" id="mensagem-erro">
+        <% if resource.errors.any? %>
+          <ul style="list-style-type: none; padding: 0; margin: 0;">
+            <% resource.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        <% else %>
+          <%= alert || flash.now[:erro] %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <h1>Criar Nova Senha</h1>
+    <p style="text-align: center; margin-bottom: 20px; color: #666; font-size: 14px;">
+      Crie uma nova senha para acessar o sistema.
+    </p>
+    
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }, data: { turbo: false }) do |form| %>
+      
+      <%= form.hidden_field :reset_password_token %>
+      
+      <div class="input-group">
+        <%= image_tag "locked.png", alt: "Ícone Cadeado" %>
+        <%= form.password_field :password, autofocus: true, autocomplete: "new-password", placeholder: "Nova Senha", required: true %>
+      </div>
+      
+      <div class="input-group">
+        <%= image_tag "locked.png", alt: "Ícone Cadeado" %>
+        <%= form.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Confirme a Nova Senha", required: true %>
+      </div>
+      
+      <%= form.submit "Mudar minha senha", class: "login-button" %>
+    <% end %>
+
+  </div>
+</div>
