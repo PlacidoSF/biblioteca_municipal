@@ -10,13 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_06_191409) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_07_000623) do
   create_table "bibliotecarios", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email"
     t.boolean "is_admin", default: false
     t.string "nome", null: false
     t.string "password_digest", null: false
+    t.datetime "reset_password_sent_at"
+    t.string "reset_password_token"
     t.boolean "senha_provisoria", default: true
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_bibliotecarios_on_email", unique: true

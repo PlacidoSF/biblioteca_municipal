@@ -1,0 +1,16 @@
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 5px;">
+  <h2 style="color: #333;">Olá!</h2>
+  
+  <p>Recebemos uma solicitação para redefinir a senha da sua conta de bibliotecário.</p>
+  
+  <p>Para criar uma nova senha, clique no botão abaixo:</p>
+  
+  <div style="text-align: center; margin: 30px 0;">
+    
+    <%= link_to "Redefinir Minha Senha", edit_recuperacao_senha_url(id: @bibliotecario.reset_password_token), style: "background-color: #333; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;" %>
+  </div>
+  
+  <p>Se você não solicitou essa alteração, pode ignorar este e-mail tranquilamente. Sua senha continuará a mesma.</p>
+  
+  <p>Abraços,<br>Equipe da Biblioteca</p>
+</div>

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "recuperacao_senhas/new"
+  get "recuperacao_senhas/edit"
 
   # login
   get 'login', to: 'sessions#new'
@@ -20,4 +22,7 @@ Rails.application.routes.draw do
 
   # usuarios
   resources :usuarios, only: [:index, :new, :create]
+
+  # recuperar senha
+  resources :recuperacao_senhas, only: [:new, :create, :edit, :update]
 end

@@ -12,6 +12,7 @@ class UsuariosController < ApplicationController
   def create
     @usuario = Usuario.new(usuario_params)
     if @usuario.save
+      UsuarioMailer.bem_vindo(@usuario).deliver_now
       redirect_to usuarios_path, notice: "Usuário criado com sucesso."
     else
       flash.now[:erro] = "Erro ao criar usuário. Verifique os campos e tente novamente."
