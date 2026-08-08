@@ -1,0 +1,95 @@
+<div class="content">
+
+  <div class="action-bar" style="display: flex; justify-content: space-between; align-items: center;">
+    
+    <%= form_with url: emprestimos_path, method: :get, local: true, style: "display: flex; gap: 10px; align-items: center;" do |f| %>
+      <label style="font-weight: bold;">Status:</label>
+      <%= f.select :status, ['Todos', 'Ativo', 'Atrasado', 'Finalizado'], { selected: params[:status] || 'Todos' }, { onchange: "this.form.submit();", style: "padding: 5px; border-radius: 4px;" } %>
+    <% end %>
+
+    <%= link_to "+ Novo Empréstimo", new_emprestimo_path, class: "btn-novo" %>
+  </div>
+
+  <div class="table-header" style="grid-template-columns: 2fr 2fr 1fr 1fr 1fr 1fr 1fr;">
+    <div class="col-info">Livro</div>
+    <div class="col-info">Leitor</div>
+    <div class="col-info">Empréstimo</div>
+    <div class="col-info">Prevista</div>
+    <div class="col-info">Status</div>
+    <div class="col-info">Multa</div>
+    <div class="col-acoes" style="text-align: center;">Ações</div>
+  </div>
+
+  <% @emprestimos.each do |e| %>
+    <div class="row" style="grid-template-columns: 2fr 2fr 1fr 1fr 1fr 1fr 1fr; align-items: center;">
+      <div class="col-info"><%= e.livro.titulo %></div>
+      <div class="col-info"><%= e.usuario.nome %></div>
+      <div class="col-info"><%= e.data_emprestimo.strftime("%d/%m/%Y") %></div>
+      <div class="col-info"><%= e.data_devolucao_prevista.strftime("%d/%m/%Y") %></div>
+      
+      <div class="col-info" style="<%= e.status_dinamico == 'Atrasado' ? 'color: red; font-weight: bold;' : '' %>">
+        <%= e.status_dinamico %>
+      </div>
+      
+      <div class="col-info">
+        <%= number_to_currency(e.valor_multa, unit: "R$ ", separator: ",", delimiter: ".") %>
+      </div>
+
+    <div class="col-acoes" style="display: flex; justify-content: center; gap: 10px;">  
+        
+        <%= link_to emprestimo_path(e), class: "btn-action btn-ver", title: "Visualizar Detalhes" do %>
+          <%= image_tag "olho.png", alt: "Ver", width: 20 %>
+        <% end %>
+
+        <% if e.status_dinamico == 'Finalizado' %>
+          <button class="btn-action btn-alterar" title="Finalizado" disabled style="opacity: 0.4; cursor: not-allowed;">
+            <%= image_tag "alterar.png", alt: "Finalizado", width: 20 %>
+          </button>
+        <% else %>
+          <button class="btn-action btn-alterar" title="Finalizar Empréstimo" onclick="abrirModalFinalizar('<%= e.id %>')">
+            <%= image_tag "alterar.png", alt: "Finalizar", width: 20 %>
+          </button>
+          
+          <div style="display: none;">
+            <%= button_to "Finalizar", finalizar_emprestimo_path(e), method: :patch, id: "btn_real_#{e.id}" %>
+          </div>
+        <% end %>
+      </div>
+    </div> 
+  <% end %>
+
+ 
+  <div id="modalFinalizar" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 1000; align-items: center; justify-content: center;">
+      <div style="background: #1e1e1e; color: #ffffff; padding: 40px 30px; border-radius: 25px; width: 350px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.8); text-align: center;">
+          
+          <button onclick="fecharModalFinalizar()" style="position: absolute; top: 15px; right: 20px; background: transparent; border: none; color: #888; font-size: 20px; cursor: pointer; transition: color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">✖</button>
+          
+          <h2 style="margin-top: 0; margin-bottom: 20px; font-size: 22px; font-weight: bold;">Finalizar Empréstimo</h2>
+          <p style="margin-bottom: 30px; color: #ccc; font-size: 14px;">Deseja confirmar a devolução e liberar o livro para o acervo?</p>
+          
+          
+          <button onclick="confirmarDevolucao()" style="width: 100%; padding: 15px; background: #00b300; color: white; border: none; border-radius: 25px; font-size: 16px; font-weight: bold; cursor: pointer;">Confirmar Devolução</button>
+      </div>
+  </div>
+
+</div> 
+
+<script>
+    let emprestimoSelecionado = null;
+
+    function abrirModalFinalizar(emprestimoId) {
+        emprestimoSelecionado = emprestimoId;
+        document.getElementById('modalFinalizar').style.display = 'flex';
+    }
+    
+    function fecharModalFinalizar() {
+        document.getElementById('modalFinalizar').style.display = 'none';
+        emprestimoSelecionado = null;
+    }
+
+    function confirmarDevolucao() {
+        if (emprestimoSelecionado) {
+            document.getElementById('btn_real_' + emprestimoSelecionado).click();
+        }
+    }
+</script>

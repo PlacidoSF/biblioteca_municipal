@@ -1,0 +1,68 @@
+
+<div class="content">
+
+  <div class="action-bar" style="justify-content: flex-start;">
+    <%= link_to "VOLTAR", emprestimos_path, class: "btn-menu", style: "color: #000; background: #e9e5e5; border-radius: 5px; padding: 8px 15px; text-decoration: none; font-weight: bold;" %>
+  </div>
+
+  
+  <div class="card-bloco">
+    <h1 class="titulo-chamado">Detalhes do Empréstimo</h1>
+    
+    <div class="meta-linha">
+      Transação #<%= @emprestimo.id %> | Registrado no sistema em: <%= @emprestimo.created_at.strftime("%d/%m/%Y às %H:%M") %>
+    </div>
+
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+      
+     
+      <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; border: 1px solid #eee;">
+        <h3 style="margin-top: 0; color: #333; border-bottom: 2px solid #ccc; padding-bottom: 5px;">📖 Sobre o Livro</h3>
+        <p style="font-size: 16px; margin-bottom: 10px;"><strong>Título:</strong> <%= @emprestimo.livro.titulo %></p>
+        <p style="font-size: 16px; margin-bottom: 10px;"><strong>Autor:</strong> <%= @emprestimo.livro.autor %></p>
+        <p style="font-size: 16px;"><strong>ID de Acervo:</strong> <%= @emprestimo.livro.id %></p>
+      </div>
+
+     
+      <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; border: 1px solid #eee;">
+        <h3 style="margin-top: 0; color: #333; border-bottom: 2px solid #ccc; padding-bottom: 5px;">👤 Sobre o Leitor</h3>
+        <p style="font-size: 16px; margin-bottom: 10px;"><strong>Nome:</strong> <%= @emprestimo.usuario.nome %></p>
+        <p style="font-size: 16px; margin-bottom: 10px;"><strong>E-mail:</strong> <%= @emprestimo.usuario.email %></p>
+        <p style="font-size: 16px;"><strong>Cadastro ID:</strong> <%= @emprestimo.usuario.id %></p>
+      </div>
+
+    
+      <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; border: 1px solid #eee; grid-column: span 2;">
+        <h3 style="margin-top: 0; color: #333; border-bottom: 2px solid #ccc; padding-bottom: 5px;">📅 Situação da Transação</h3>
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+          <div>
+            <p style="font-size: 14px; color: #777; margin: 0 0 5px 0;">Data de Retirada</p>
+            <p style="font-size: 18px; font-weight: bold; margin: 0;"><%= @emprestimo.data_emprestimo.strftime("%d/%m/%Y") %></p>
+          </div>
+          
+          <div>
+            <p style="font-size: 14px; color: #777; margin: 0 0 5px 0;">Devolução Prevista</p>
+            <p style="font-size: 18px; font-weight: bold; margin: 0;"><%= @emprestimo.data_devolucao_prevista.strftime("%d/%m/%Y") %></p>
+          </div>
+          
+          <div>
+            <p style="font-size: 14px; color: #777; margin: 0 0 5px 0;">Status Atual</p>
+            <p style="font-size: 18px; font-weight: bold; margin: 0; color: <%= @emprestimo.status_dinamico == 'Atrasado' ? '#ff4d4d' : (@emprestimo.status_dinamico == 'Finalizado' ? '#00b300' : '#333') %>;">
+              <%= @emprestimo.status_dinamico %>
+            </p>
+          </div>
+          
+          <div>
+            <p style="font-size: 14px; color: #777; margin: 0 0 5px 0;">Multa Acumulada</p>
+            <p style="font-size: 18px; font-weight: bold; margin: 0;">
+              <%= number_to_currency(@emprestimo.valor_multa, unit: "R$ ", separator: ",", delimiter: ".") %>
+            </p>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>

@@ -1,4 +1,6 @@
 class Usuario < ApplicationRecord
+  has_many :emprestimos
+  
   validates :nome, :cpf, :telefone, :email, :senha_emprestimo, presence: true
   validates :cpf, uniqueness: true
 

@@ -1,19 +1,21 @@
-<div class="action-bar">
-  <%= link_to "+ Novo Usuário", new_bibliotecario_path, class: "btn-novo" %>
-</div>
-
-<div class="table-header">
-  <div class="col-nome">Nome</div>
-  <div class="col-email">E-mail</div>
-  <div class="col-info">Tipo de Perfil</div>
-</div>
-
-<% @bibliotecarios.each do |u| %>
-  <div class="row">
-    <div class="col-nome"><%= u.nome %></div>
-    <div class="col-email"><%= u.email %></div>
-    <div class="col-info">
-      <%= u.is_admin ? "Administrador" : "Bibliotecário" %>
-    </div>
+<div class="content">
+  <div class="action-bar">
+    <%= link_to "+ Novo Usuário", new_bibliotecario_path, class: "btn-novo" %>
   </div>
-<% end %>
+
+  <div class="table-header" style="display: grid; grid-template-columns: 2fr 2fr 1.5fr;">
+    <div class="col-nome">Nome</div>
+    <div class="col-info" style="text-align: left;">E-mail</div>
+    <div class="col-info">Tipo de Perfil</div>
+  </div>
+
+  <% @bibliotecarios.each do |u| %>
+    <div class="row" style="display: grid; grid-template-columns: 2fr 2fr 1.5fr; align-items: center;">
+      <div class="col-nome"><%= u.nome %></div>
+      <div class="col-info" style="text-align: left;"><%= u.email %></div>
+      <div class="col-info">
+        <%= u.is_admin ? "Administrador" : "Bibliotecário" %>
+      </div>
+    </div>
+  <% end %>
+</div>

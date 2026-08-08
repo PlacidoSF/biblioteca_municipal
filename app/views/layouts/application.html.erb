@@ -23,9 +23,18 @@
     <% if current_bibliotecario && !current_bibliotecario.senha_provisoria %>
       <header class="header">
         <div class="logo">
-          <%= image_tag "logo.png", width: 24, alt: "Logo" %>
+          <%= image_tag "logo.png", width: 180, alt: "Logo" %>
         </div>
         <nav class="menu-area">
+          <%= link_to "Empréstimos", emprestimos_path, class: "btn-menu" %>
+          <%= link_to "Livros", livros_path, class: "btn-menu" %>
+          <%= link_to "Categorias", categorias_path, class: "btn-menu" %>
+          <%= link_to "Usuários", usuarios_path, class: "btn-menu" %>
+          
+          <% if current_bibliotecario.is_admin %>
+            <%= link_to "Bibliotecários", bibliotecarios_path, class: "btn-menu" %>
+          <% end %>
+
           <%= button_to "SAIR", destroy_bibliotecario_session_path, method: :delete, class: "btn-menu", data: { turbo: false } %>
         </nav>
       </header>

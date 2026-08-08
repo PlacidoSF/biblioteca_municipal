@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_07_121106) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_07_175943) do
   create_table "bibliotecarios", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email"
@@ -29,6 +29,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_07_121106) do
     t.datetime "created_at", null: false
     t.string "nome"
     t.datetime "updated_at", null: false
+  end
+
+  create_table "emprestimos", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.date "data_devolucao_prevista"
+    t.date "data_emprestimo"
+    t.bigint "livro_id", null: false
+    t.string "status"
+    t.datetime "updated_at", null: false
+    t.bigint "usuario_id", null: false
+    t.index ["livro_id"], name: "index_emprestimos_on_livro_id"
+    t.index ["usuario_id"], name: "index_emprestimos_on_usuario_id"
   end
 
   create_table "livros", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -53,5 +65,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_07_121106) do
     t.index ["cpf"], name: "index_usuarios_on_cpf", unique: true
   end
 
+  add_foreign_key "emprestimos", "livros"
+  add_foreign_key "emprestimos", "usuarios"
   add_foreign_key "livros", "categorias"
 end

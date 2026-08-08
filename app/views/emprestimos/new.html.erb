@@ -1,0 +1,35 @@
+<div class="content">
+
+  <div class="action-bar" style="justify-content: flex-start;">
+    <%= link_to "VOLTAR", emprestimos_path, class: "btn-menu", style: "color: #000; background: #e9e5e5; border-radius: 5px;" %>
+  </div>
+
+  <div class="form-container">
+    <h1 class="page-title">Novo Empréstimo</h1>
+    <p class="page-subtitle">Preencha os dados e valide o PIN do leitor para autorizar a transação.</p>
+
+    <% if @emprestimo.errors.any? %>
+      <div class="error-message">
+        <ul style="list-style-type: none; padding: 0; margin: 0;">
+          <% @emprestimo.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form_with model: @emprestimo, local: true do |form| %>
+      
+      <div class="input-grid">
+        <%= form.collection_select :livro_id, Livro.where(status: 'disponível'), :id, :titulo, { prompt: "Selecione o Livro Disponível" }, { required: true, class: "input-field" } %>
+        
+        <%= form.collection_select :usuario_id, Usuario.all, :id, :nome, { prompt: "Selecione o Leitor" }, { required: true, class: "input-field" } %>
+        
+        <%= form.password_field :senha_digitada, placeholder: "Senha de Empréstimo (PIN)", required: true, class: "input-field" %>
+      </div>
+
+      <%= form.submit "CONFIRMAR EMPRÉSTIMO", class: "btn-confirmar" %>
+      
+    <% end %>
+  </div>
+</div>
