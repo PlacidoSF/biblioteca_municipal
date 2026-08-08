@@ -1,29 +1,14 @@
 <div class="login-wrapper">
   <div class="login-container">
     
-    <% if resource.errors.any? || alert || flash.now[:erro] %>
+    <% if resource.errors.any? %>
       <div class="error-message" id="mensagem-erro">
-        <% if resource.errors.any? %>
-          <ul style="list-style-type: none; padding: 0; margin: 0;">
-            <% resource.errors.full_messages.each do |msg| %>
-              <li><%= msg %></li>
-            <% end %>
-          </ul>
-        <% else %>
-          <%= alert || flash.now[:erro] %>
-        <% end %>
+        <ul style="list-style-type: none; padding: 0; margin: 0;">
+          <% resource.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
       </div>
-
-      <script>
-        setTimeout(function() {
-          const mensagem = document.getElementById('mensagem-erro');
-          if (mensagem) {
-            mensagem.style.transition = 'opacity 0.5s ease';
-            mensagem.style.opacity = '0';
-            setTimeout(function() { mensagem.remove(); }, 500); 
-          }
-        }, 2000);
-      </script>
     <% end %>
 
     <h1>Nova Senha</h1>

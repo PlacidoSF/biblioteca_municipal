@@ -1,26 +1,6 @@
 <% flash.delete(:notice) %>
 <div class="login-wrapper">
   <div class="login-container">
-    
-    <% if alert || notice %>
-      <div class="error-message" id="mensagem-erro">
-        <%= alert || notice %>
-      </div>
-
-      <script>
-        setTimeout(function() {
-          const mensagem = document.getElementById('mensagem-erro');
-          if (mensagem) {
-            mensagem.style.transition = 'opacity 0.5s ease';
-            mensagem.style.opacity = '0';
-            
-            setTimeout(function() {
-              mensagem.remove();
-            }, 500); 
-          }
-        }, 2000);
-      </script>
-    <% end %>
 
     <h1>Log in</h1>
     

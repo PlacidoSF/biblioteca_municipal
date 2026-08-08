@@ -1,17 +1,13 @@
 <div class="login-wrapper">
   <div class="login-container">
     
-    <% if resource.errors.any? || alert || flash.now[:erro] %>
+    <% if resource.errors.any? %>
       <div class="error-message" id="mensagem-erro">
-        <% if resource.errors.any? %>
-          <ul style="list-style-type: none; padding: 0; margin: 0;">
-            <% resource.errors.full_messages.each do |msg| %>
-              <li><%= msg %></li>
-            <% end %>
-          </ul>
-        <% else %>
-          <%= alert || flash.now[:erro] %>
-        <% end %>
+        <ul style="list-style-type: none; padding: 0; margin: 0;">
+          <% resource.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
       </div>
     <% end %>
 

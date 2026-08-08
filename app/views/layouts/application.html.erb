@@ -28,7 +28,7 @@
       </div>
     <% end %>
 
-    <% if alert %>
+    <% if alert && !alert.to_s.include?("Translation missing") %>
       <div class="toast-mensagem toast-erro">
         <%= alert %>
         <span class="fechar-toast" onclick="this.parentElement.remove();">&times;</span>
