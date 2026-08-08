@@ -1,13 +1,17 @@
 <div class="content">
 
-  <div class="action-bar" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="action-bar" style="display: flex; justify-content: space-between; align-items: center;">
     
     <%= form_with url: emprestimos_path, method: :get, local: true, style: "display: flex; gap: 10px; align-items: center;" do |f| %>
       <label style="font-weight: bold;">Status:</label>
       <%= f.select :status, ['Todos', 'Ativo', 'Atrasado', 'Finalizado'], { selected: params[:status] || 'Todos' }, { onchange: "this.form.submit();", style: "padding: 5px; border-radius: 4px;" } %>
     <% end %>
 
-    <%= link_to "+ Novo Empréstimo", new_emprestimo_path, class: "btn-novo" %>
+    
+    <div style="display: flex; gap: 15px;">
+      <%= link_to "📄 Relatório de Atrasos", relatorio_atrasos_emprestimos_path(format: :pdf), class: "btn-relatorio", target: "_blank" %>
+      <%= link_to "+ Novo Empréstimo", new_emprestimo_path, class: "btn-novo" %>
+    </div>
   </div>
 
   <div class="table-header" style="grid-template-columns: 2fr 2fr 1fr 1fr 1fr 1fr 1fr;">

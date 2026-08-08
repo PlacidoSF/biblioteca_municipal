@@ -39,13 +39,6 @@ body {
     border: 1px solid #eee; 
 }
 
-.titulo-chamado { 
-    font-size: 28px; 
-    font-weight: bold; 
-    color: #333; 
-    margin: 0 0 10px 0; 
-}
-
 .meta-linha { 
     font-size: 13px; 
     color: #777; 
@@ -137,4 +130,48 @@ body {
         top: 25px;
         opacity: 1;
     }
+}
+
+.btn-relatorio {
+    background-color: #34495e;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.2s, transform 0.1s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+}
+
+.btn-relatorio:hover {
+    background-color: #2c3e50; 
+    color: white;
+}
+
+.btn-relatorio:active {
+    transform: scale(0.95);
+}
+
+
+.btn-detalhes {
+    background-color: #17a2b8; 
+    padding: 6px 10px;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    transition: background-color 0.2s ease, transform 0.1s;
+}
+
+.btn-detalhes:hover {
+    background-color: #117a8b; 
+}
+
+.btn-detalhes:active {
+    transform: scale(0.95);
 }

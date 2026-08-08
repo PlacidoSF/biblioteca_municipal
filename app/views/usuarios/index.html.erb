@@ -3,26 +3,28 @@
     <%= link_to "+ Novo Usuário", new_usuario_path, class: "btn-novo" %>
   </div>
 
-  <div class="table-header" style="display: grid; grid-template-columns: 2fr 2fr 1.5fr 1.5fr 1fr 100px; margin-bottom: 10px;">
+  <div class="table-header" style="display: grid; grid-template-columns: 2fr 2fr 1.5fr 1fr 130px; margin-bottom: 10px;">
     <div class="col-nome">Nome</div>
     <div class="col-info" style="text-align: left;">E-mail</div>
     <div class="col-info">CPF</div>
-    <div class="col-info">Telefone</div>
     <div class="col-info">Senha (PIN)</div>
     <div class="col-acoes" style="text-align: center;">Ações</div>
   </div>
 
   <% @usuarios.each do |usuario| %>
-    <div class="row" style="display: grid; grid-template-columns: 2fr 2fr 1.5fr 1.5fr 1fr 100px; align-items: center; margin-bottom: 10px;">
+
+    <div class="row" style="display: grid; grid-template-columns: 2fr 2fr 1.5fr 1fr 130px; align-items: center; margin-bottom: 10px;">
       <div class="col-nome"><%= usuario.nome %></div>
       <div class="col-info" style="text-align: left;"><%= usuario.email %></div>
       <div class="col-info"><%= usuario.cpf %></div>
-      <div class="col-info"><%= usuario.telefone %></div>
       <div class="col-info"><strong><%= usuario.senha_emprestimo %></strong></div>
 
       
       <div class="col-acoes" style="display: flex; justify-content: center; gap: 10px;">  
-        
+        <%= link_to usuario_path(usuario), class: "btn-action btn-detalhes", title: "Ver Histórico" do %>
+          <%= image_tag "olho.png", alt: "Histórico", width: 20 %>
+        <% end %>
+
         <%= link_to edit_usuario_path(usuario), class: "btn-action btn-editar", title: "Editar" do %>
           <%= image_tag "alterar.png", alt: "Editar", width: 20 %>
         <% end %>

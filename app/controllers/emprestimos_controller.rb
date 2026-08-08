@@ -45,6 +45,22 @@ class EmprestimosController < ApplicationController
     end
   end
 
+  def relatorio_atrasos
+    
+    @emprestimos = Emprestimo.where("data_devolucao_prevista < ? AND status != ?", Date.current, "Finalizado")
+
+    respond_to do |format|
+      format.pdf do
+        
+        pdf = RelatorioAtrasosPdf.new(@emprestimos)
+        
+        send_data pdf.render, filename: "relatorio_inadimplencia_#{Date.current.strftime('%d_%m_%Y')}.pdf",
+                              type: "application/pdf",
+                              disposition: "inline"
+      end
+    end
+  end
+
   private
    
     def set_emprestimo

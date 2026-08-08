@@ -1,0 +1,60 @@
+<div class="content">
+
+  <div class="action-bar" style="justify-content: flex-start;">
+    <%= link_to "VOLTAR", usuarios_path, class: "btn-menu", style: "color: #000; background: #e9e5e5; border-radius: 5px; padding: 8px 15px; text-decoration: none; font-weight: bold;" %>
+  </div>
+  
+  <div class="card-bloco" style="background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+    <h1 class="titulo-chamado">Perfil e Histórico do Leitor</h1>
+    
+    <div class="meta-linha" style="margin-bottom: 25px; font-size: 14px; color: #666;">
+      Cadastro ID #<%= @usuario.id %> | Registrado no sistema em: <%= @usuario.created_at.strftime("%d/%m/%Y") %>
+    </div>
+
+    <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin-bottom: 30px;">
+      <h3 style="margin-top: 0; color: #333; border-bottom: 2px solid #ccc; padding-bottom: 5px;">👤 Dados Cadastrais</h3>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
+        <p style="font-size: 16px; margin: 0;"><strong>Nome:</strong> <%= @usuario.nome %></p>
+        <p style="font-size: 16px; margin: 0;"><strong>E-mail:</strong> <%= @usuario.email %></p>
+        <p style="font-size: 16px; margin: 0;"><strong>CPF:</strong> <%= @usuario.cpf %></p>
+        <p style="font-size: 16px; margin: 0;"><strong>Telefone:</strong> <%= @usuario.telefone %></p>
+      </div>
+    </div>
+
+    <h3 style="color: #333; border-bottom: 2px solid #ccc; padding-bottom: 5px; margin-bottom: 15px;">📚 Registro de Empréstimos</h3>
+
+    <% if @emprestimos.any? %>
+      <div class="table-header" style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; margin-bottom: 10px; font-weight: bold; padding: 12px; background: #eee; border-radius: 5px; color: #555;">
+        <div>Livro</div>
+        <div style="text-align: center;">Retirada</div>
+        <div style="text-align: center;">Prevista</div>
+        <div style="text-align: center;">Status</div>
+        <div style="text-align: right;">Multa</div>
+      </div>
+
+      <% @emprestimos.each do |emprestimo| %>
+        <div class="row" style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; align-items: center; margin-bottom: 10px; padding: 12px; border-bottom: 1px solid #eee;">
+          <div style="font-weight: 500;"><%= emprestimo.livro.titulo %></div>
+          <div style="text-align: center;"><%= emprestimo.data_emprestimo.strftime("%d/%m/%Y") %></div>
+          <div style="text-align: center;"><%= emprestimo.data_devolucao_prevista.strftime("%d/%m/%Y") %></div>
+          
+          <div style="text-align: center;">
+            <span style="<%= emprestimo.status_dinamico == 'Atrasado' ? 'color: #d32f2f; font-weight: bold;' : (emprestimo.status_dinamico == 'Finalizado' ? 'color: #2e7d32; font-weight: bold;' : 'color: #333; font-weight: bold;') %>">
+              <%= emprestimo.status_dinamico %>
+            </span>
+          </div>
+          
+          <div style="text-align: right; color: <%= emprestimo.valor_multa > 0 ? '#d32f2f' : '#777' %>;">
+            <%= number_to_currency(emprestimo.valor_multa, unit: "R$ ", separator: ",", delimiter: ".") %>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p style="text-align: center; color: #777; font-style: italic; margin-top: 30px; padding: 20px; background: #f9f9f9; border-radius: 8px;">
+        Este leitor ainda não possui histórico de empréstimos em nossa biblioteca.
+      </p>
+    <% end %>
+    
+  </div>
+</div>

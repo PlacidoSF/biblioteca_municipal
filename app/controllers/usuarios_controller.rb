@@ -1,5 +1,5 @@
 class UsuariosController < ApplicationController
-  before_action :set_usuario, only: %i[ edit update destroy ]
+  before_action :set_usuario, only: %i[ show edit update destroy ]
 
   def index 
     @usuarios = Usuario.all
@@ -7,6 +7,10 @@ class UsuariosController < ApplicationController
 
   def new 
     @usuario = Usuario.new
+  end
+
+  def show
+    @emprestimos = @usuario.emprestimos.includes(:livro).order(created_at: :desc)
   end
 
   def create
