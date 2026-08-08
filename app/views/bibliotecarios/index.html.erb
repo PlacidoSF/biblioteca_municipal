@@ -1,21 +1,76 @@
 <div class="content">
-  <div class="action-bar">
-    <%= link_to "+ Novo Usuário", new_bibliotecario_path, class: "btn-novo" %>
+
+  <div class="action-bar" style="display: flex; justify-content: flex-end; align-items: center;">
+    <%= link_to "+ Novo Bibliotecário", new_bibliotecario_path, class: "btn-novo" %>
   </div>
 
-  <div class="table-header" style="display: grid; grid-template-columns: 2fr 2fr 1.5fr;">
+  <div class="table-header" style="display: grid; grid-template-columns: 2fr 3fr 1.5fr 1fr; margin-bottom: 10px;">
     <div class="col-nome">Nome</div>
     <div class="col-info" style="text-align: left;">E-mail</div>
     <div class="col-info">Tipo de Perfil</div>
+    <div class="col-acoes" style="text-align: center;">Ações</div>
   </div>
 
-  <% @bibliotecarios.each do |u| %>
-    <div class="row" style="display: grid; grid-template-columns: 2fr 2fr 1.5fr; align-items: center;">
-      <div class="col-nome"><%= u.nome %></div>
-      <div class="col-info" style="text-align: left;"><%= u.email %></div>
+  <% @bibliotecarios.each do |b| %>
+    <div class="row" style="display: grid; grid-template-columns: 2fr 3fr 1.5fr 1fr; align-items: center; margin-bottom: 10px;">
+      <div class="col-nome"><%= b.nome %></div>
+      <div class="col-info" style="text-align: left;"><%= b.email %></div>
       <div class="col-info">
-        <%= u.is_admin ? "Administrador" : "Bibliotecário" %>
+        <%= b.is_admin ? "Administrador" : "Bibliotecário" %>
       </div>
-    </div>
+
+      
+      <div class="col-acoes" style="display: flex; justify-content: center; gap: 10px;">  
+        
+       
+        <%= link_to edit_bibliotecario_path(b), class: "btn-action btn-editar", title: "Editar" do %>
+          <%= image_tag "alterar.png", alt: "Editar", width: 20 %>
+        <% end %>
+
+        
+        <button class="btn-action btn-excluir" title="Excluir Bibliotecário" onclick="abrirModalExcluir('<%= b.id %>')">
+          <%= image_tag "excluir.png", alt: "Excluir", width: 20 %>
+        </button>
+        
+        
+        <div style="display: none;">
+          <%= button_to "Deletar", bibliotecario_path(b), method: :delete, id: "btn_real_delete_#{b.id}" %>
+        </div>
+      </div>
+    </div> 
   <% end %>
-</div>
+
+ 
+  <div id="modalExcluir" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 1000; align-items: center; justify-content: center;">
+      <div style="background: #1e1e1e; color: #ffffff; padding: 40px 30px; border-radius: 25px; width: 350px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.8); text-align: center;">
+          
+          <button onclick="fecharModalExcluir()" style="position: absolute; top: 15px; right: 20px; background: transparent; border: none; color: #888; font-size: 20px; cursor: pointer; transition: color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">✖</button>
+          
+          <h2 style="margin-top: 0; margin-bottom: 20px; font-size: 22px; font-weight: bold;">Atenção!</h2>
+          <p style="margin-bottom: 30px; color: #ccc; font-size: 14px;">Tem certeza que deseja excluir este bibliotecário? Esta ação não pode ser desfeita.</p>
+          
+          <button onclick="confirmarExclusao()" style="width: 100%; padding: 15px; background: #cc0000; color: white; border: none; border-radius: 25px; font-size: 16px; font-weight: bold; cursor: pointer;">Sim, Excluir</button>
+      </div>
+  </div>
+
+</div> 
+
+<script>
+    let idParaExcluir = null;
+
+    function abrirModalExcluir(id) {
+        idParaExcluir = id;
+        document.getElementById('modalExcluir').style.display = 'flex';
+    }
+    
+    function fecharModalExcluir() {
+        document.getElementById('modalExcluir').style.display = 'none';
+        idParaExcluir = null;
+    }
+
+    function confirmarExclusao() {
+        if (idParaExcluir) {
+            document.getElementById('btn_real_delete_' + idParaExcluir).click();
+        }
+    }
+</script>

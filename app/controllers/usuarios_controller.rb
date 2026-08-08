@@ -1,4 +1,5 @@
 class UsuariosController < ApplicationController
+  before_action :set_usuario, only: %i[ edit update destroy ]
 
   def index 
     @usuarios = Usuario.all
@@ -19,7 +20,31 @@ class UsuariosController < ApplicationController
     end
   end
 
+  def edit
+  end
+
+  def update
+    if @usuario.update(usuario_params)
+      redirect_to usuarios_path, notice: "Usuário atualizado com sucesso!"
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    if @usuario.destroy
+      redirect_to usuarios_path, notice: "Usuário removido com sucesso!"
+    else
+      
+      redirect_to usuarios_path, alert: "Ação bloqueada: Este usuário possui histórico de empréstimos e não pode ser excluído."
+    end
+  end
+
   private
+
+  def set_usuario
+    @usuario = Usuario.find(params[:id])
+  end
 
   def usuario_params
     params.require(:usuario).permit(:nome, :cpf, :telefone, :email)

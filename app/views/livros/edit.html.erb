@@ -1,0 +1,34 @@
+<div class="content">
+  <div class="action-bar" style="justify-content: flex-start;">
+    <%= link_to "VOLTAR", livros_path, class: "btn-menu", style: "color: #000; background: #e9e5e5; border-radius: 5px;" %>
+  </div>
+
+  <div class="form-container">
+    <h1 class="page-title">Editar Livro</h1>
+    <p class="page-subtitle">Atualize as informações do livro no acervo.</p>
+    
+    <% if @livro.errors.any? %>
+      <div class="error-message">
+        <ul style="list-style-type: none; padding: 0; margin: 0;">
+          <% @livro.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form_with model: @livro, local: true do |form| %>
+      <div class="input-grid">
+        <%= form.text_field :titulo, placeholder: "Título do Livro", required: true, class: "input-field" %>
+        
+        <%= form.text_field :autor, placeholder: "Nome do Autor", required: true, class: "input-field" %>
+        
+        <%= form.collection_select :categoria_id, Categoria.order(:nome), :id, :nome, { prompt: "Selecione a Categoria..." }, { required: true, class: "input-field" } %>
+        
+        <%= form.text_area :observacoes, placeholder: "Observações (Opcional)", class: "input-field", rows: 3 %>
+      </div>
+
+      <%= form.submit "ATUALIZAR", class: "btn-confirmar" %>
+    <% end %>
+  </div>
+</div>

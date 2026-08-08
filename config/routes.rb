@@ -6,16 +6,16 @@ Rails.application.routes.draw do
   }
   
   # bibliotecarios
-  resources :bibliotecarios, only: [:index, :new, :create]
+  resources :bibliotecarios, only: [:index, :new, :create, :edit, :update, :destroy]
   
   # categorias 
-  resources :categorias, only: [:index, :new, :create]
+  resources :categorias, only: [:index, :new, :create , :edit, :update, :destroy]
 
   # livros
-  resources :livros, only: [:index, :new, :create]
+  resources :livros, only: [:index, :new, :create, :edit, :update, :destroy]
 
   # usuarios
-  resources :usuarios, only: [:index, :new, :create]
+  resources :usuarios, only: [:index, :new, :create, :edit, :update, :destroy]
 
   # emprestimos
   resources :emprestimos, only: [:index, :new, :create, :show] do

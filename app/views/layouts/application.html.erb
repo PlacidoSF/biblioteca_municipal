@@ -20,6 +20,43 @@
   </head>
 
   <body>
+    
+    <% if notice && !notice.to_s.include?("Translation missing") %>
+      <div class="toast-mensagem toast-sucesso">
+        <%= notice %>
+        <span class="fechar-toast" onclick="this.parentElement.remove();">&times;</span>
+      </div>
+    <% end %>
+
+    <% if alert %>
+      <div class="toast-mensagem toast-erro">
+        <%= alert %>
+        <span class="fechar-toast" onclick="this.parentElement.remove();">&times;</span>
+      </div>
+    <% end %>
+
+    <script>
+      function ocultarToasts() {
+        setTimeout(function() {
+          const toasts = document.querySelectorAll('.toast-mensagem');
+          toasts.forEach(toast => {
+            toast.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            toast.style.opacity = '0';
+            toast.style.transform = 'translate(-50%, -20px)'; 
+            
+            
+            setTimeout(() => toast.remove(), 500);
+          });
+        }, 1500); 
+      }
+
+      
+      document.addEventListener("DOMContentLoaded", ocultarToasts);
+      
+     
+      document.addEventListener("turbo:load", ocultarToasts);
+    </script>
+
     <% if current_bibliotecario && !current_bibliotecario.senha_provisoria %>
       <header class="header">
         <div class="logo">

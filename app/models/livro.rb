@@ -1,5 +1,5 @@
 class Livro < ApplicationRecord
-  has_many :emprestimos
+  has_many :emprestimos, dependent: :restrict_with_error
   
   belongs_to :categoria
 
