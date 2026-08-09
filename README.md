@@ -9,6 +9,7 @@
 - [4. Arquitetura, Lógica de Negócio e Funcionalidades](#4-arquitetura-lógica-de-negócio-e-funcionalidades)
 - [5. Como Executar o Projeto](#5-como-executar-o-projeto)
 - [6. Primeiro Acesso ao Sistema](#6-primeiro-acesso-ao-sistema)
+
 ---
 
 ## 1. Apresentação do Projeto
@@ -35,7 +36,7 @@ A modelagem do domínio do sistema foi dividida em duas frentes principais: o co
 **Perfis de Acesso (Controle Baseado em Papéis)**
 O sistema exige e implementa um controle de permissões rigoroso, segregando as operações em dois níveis:
 * **Bibliotecários (Administradores):** Detêm o controle de gestão estrutural da plataforma. São os únicos autorizados a acessar o sistema, cadastrar categorias, registrar novos livros, cadastrar usuários (leitores) e efetivar operações de empréstimo e devolução.
-* **Usuários (Leitores):** São os clientes finais do sistema. Diferente dos bibliotecários, eles não possuem acesso de login à plataforma. Sua atuação é validada fisicamente no balcão de atendimento através de um PIN (senha) gerado pelo sistema e enviado exclusivamente para seus e-mails.
+* **Usuários (Leitores):** São os clientes finais do sistema. Diferente dos bibliotecários, eles não possuem acesso de login à plataforma. Sua atuação é validada fisicamente no balcão de atendimento através de um PIN (senha) gerado pelo sistema e enviado exclusivamente para seus e-mails. *(Nota estrutural: Como os leitores não possuem acesso ao sistema e a senha serve estritamente para a validação presencial do empréstimo pelo bibliotecário, o PIN gerado também foi deixado visível na tela de listagem de usuários. Essa decisão arquitetural permite que o avaliador da banca teste o fluxo completo de empréstimos imediatamente, sem depender de acessos externos a caixas de e-mail).*
 
 **Ciclo de Vida do Livro e Empréstimo**
 O fluxo processual foi desenhado para evitar inconsistências. Um livro recém-cadastrado recebe o status de "disponível". Ao ser vinculado a um empréstimo ativo, seu status muda automaticamente para "emprestado", sumindo das opções de seleção para novas transações. Ao atingir o estado de devolução, o sistema calcula eventuais atrasos, registra as multas e devolve o status do livro para "disponível", garantindo a integridade do histórico.
@@ -80,10 +81,16 @@ Abra o seu terminal e faça o clone do projeto:
     cd biblioteca_municipal
 
 **2. Configurar as Variáveis de Ambiente**
-Por questões de segurança e boas práticas, credenciais de banco de dados não são versionadas no código. Na raiz do projeto, crie um arquivo .env contendo as variáveis necessárias (como as senhas do MySQL e as credenciais do servidor SMTP para envio de e-mails).
+Por questões de segurança estrutural, o banco de dados e as credenciais de e-mail (Action Mailer) estão protegidos. As configurações do SMTP foram criptografadas nativamente pelo cofre do Rails (`credentials.yml.enc`). Como a conta de e-mail configurada no sistema foi criada de forma isolada e exclusiva para os testes desta banca avaliadora, a chave mestra real está sendo fornecida para garantir a execução fluida do ambiente local sem erros de autenticação SMTP.
+
+Na raiz do projeto, existe um arquivo chamado `.env_exemplo`. **Renomeie este arquivo para `.env`** (removendo o sufixo `_exemplo`). O arquivo já contém as credenciais necessárias para rodar a aplicação:
+
+    DB_USERNAME=root
+    DB_PASSWORD=sua_senha_mysql
+    RAILS_MASTER_KEY=c835e2a9adccc7514ac491d2143cfd7f
 
 **3. Compilar e Subir os Contêineres**
-Com o Docker em execução na sua máquina, rode o comando abaixo na raiz do projeto. O Docker irá compilar o código fonte e iniciar os contêineres do banco e da aplicação Web:
+Com o Docker em execução na sua máquina e o arquivo `.env` configurado, rode o comando abaixo na raiz do projeto. O Docker irá compilar o código fonte e iniciar os contêineres do banco e da aplicação Web:
 
     docker compose up --build -d
 
@@ -98,3 +105,5 @@ A preparação do banco de dados do Rails realiza a criação automática de um 
 Para realizar o login e começar a utilizar o sistema, utilize as seguintes credenciais:
 * **E-mail:** admin@biblioteca.com
 * **Senha:** admin123
+
+Vale ressaltar que, por ser um perfil administrador configurado nativamente com o atributo de senha provisória desativado, este acesso não exigirá a tela de redefinição de senha, permitindo entrada direta e imediata no painel principal.
