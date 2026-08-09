@@ -1,7 +1,8 @@
 class RelatorioAtrasosPdf < Prawn::Document
   def initialize(emprestimos)
     super(page_size: "A4", margin: 40)
-    @emprestimos = emprestimos
+  
+    @emprestimos = emprestimos.select { |e| e.status_dinamico == 'Atrasado' }
 
     cabecalho
     espacamento
