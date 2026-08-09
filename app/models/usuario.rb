@@ -2,9 +2,12 @@ class Usuario < ApplicationRecord
   has_many :emprestimos, dependent: :restrict_with_error
   
   validates :nome, :cpf, :telefone, :email, :senha_emprestimo, presence: true
-  validates :cpf, uniqueness: true
 
   validates :email, uniqueness: true
+
+  validates :cpf, uniqueness: true, length: { is: 11 }
+  
+  validates :telefone, length: { in: 10..15 }
 
   before_validation :gerar_senha_emprestimo, on: :create
   
